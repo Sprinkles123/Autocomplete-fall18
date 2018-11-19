@@ -37,7 +37,7 @@ public class BinarySearchLibrary {
 		int med=0;
 		// (low,high] contains target
 		// TODO: complete method
-		while (low+1!=high) {
+		while (low <= high) {
 			if(low+1==high&& (comp.compare(list.get(high),target)==0) ) {return high;}
 			else if(low+1==high&& !(comp.compare(list.get(high),target)==0) ) {return -1;} 
 		med= ((low+high)/2);
@@ -82,7 +82,7 @@ public class BinarySearchLibrary {
 		// TODO: complete method
 		
 		int med=0;
-		while (low+1!=high) {
+		while (low <= high) {
 			med= ((low+high)/2);
 			//System.out.println(low);
 			//System.out.println(med);
