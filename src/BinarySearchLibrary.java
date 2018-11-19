@@ -83,29 +83,30 @@ public class BinarySearchLibrary {
 		// TODO: complete method
 		
 		int med=0;
-		while (low <= high) {
+		while (low+1 != high) {
+			//while (low <= high) {
 			med= ((low+high)/2);
 			//System.out.println(low);
 			//System.out.println(med);
 			//System.out.println(high);
 			//System.out.println(9999);
-			if(low+1==high&& (comp.compare(list.get(low),target)==0) ) {return low;}
-			else if(low+1==high&& !(comp.compare(list.get(low),target)==0) ) {return -1;} 
-			if  (comp.compare(list.get(med),target)>0 ){
+			//if(low+1==high&& (comp.compare(list.get(low),target)==0) ) {return low;}
+			//else if(low+1==high&& !(comp.compare(list.get(low),target)==0) ) {return -1;} 
+			if  (comp.compare(list.get(med),target)>=0 ){
 				high=med;	
 			}
 			if (comp.compare(list.get(med),target)<0 ){
 				low=med;
 			}
-			if (comp.compare(list.get(med),target)==0 ){
+			//if (comp.compare(list.get(med),target)==0 ){
 				
-					low=med;
+				//	low=med;
 					
-			}
+			//}
 				//return med;
 			
 			}
-			
+		if (comp.compare(list.get(low),target)==0)  {return low;}
 				
 		return med;
 	}
