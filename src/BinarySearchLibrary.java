@@ -83,7 +83,7 @@ public class BinarySearchLibrary {
 		// TODO: complete method
 		
 		int med=0;
-		while (low+1 != high) {
+		while (low != high-1) {
 			//while (low <= high) {
 			med= ((low+high)/2);
 			//System.out.println(low);
