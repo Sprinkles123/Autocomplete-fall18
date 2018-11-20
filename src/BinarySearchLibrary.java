@@ -43,10 +43,12 @@ public class BinarySearchLibrary {
 			//else if(low+1==high&& !(comp.compare(list.get(high),target)==0) ) {return -1;} 
 		med= ((low+high)/2);
 		
-		if (comp.compare(list.get(med),target)>=0 ){
+		int compVal = comp.compare(list.get(med),target);
+		
+		if (compVal>=0 ){
 			high=med;	
 		}
-		if (comp.compare(list.get(med),target)<0 ){
+		if (compVal<0 ){
 			low=med;
 		}
 		//if (comp.compare(list.get(med),target)==0 ){
@@ -55,10 +57,10 @@ public class BinarySearchLibrary {
 		//}
 		
 		}
-		if (comp.compare(list.get(high),target)==0)  {return high;}
+		//if (comp.compare(list.get(high),target)==0)  {return high;}
 		//return med;
 
-		return -1;
+		return med;
 	}
 
 	/**
