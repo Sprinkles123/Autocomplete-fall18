@@ -57,10 +57,10 @@ public class BinarySearchLibrary {
 		//}
 		
 		}
-		//if (comp.compare(list.get(high),target)==0)  {return high;}
+		if (comp.compare(list.get(high),target)==0)  {return high;}
 		//return med;
 
-		return med;
+		return -1;
 	}
 
 	/**
