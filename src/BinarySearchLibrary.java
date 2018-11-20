@@ -97,10 +97,11 @@ public class BinarySearchLibrary {
 			//System.out.println(9999);
 			//if(low+1==high&& (comp.compare(list.get(low),target)==0) ) {return low;}
 			//else if(low+1==high&& !(comp.compare(list.get(low),target)==0) ) {return -1;} 
-			if  (comp.compare(list.get(med),target)>0 ){
+			int compVal = comp.compare(list.get(med),target);
+			if  (compVal>0 ){
 				high=med;	
 			}
-			if (comp.compare(list.get(med),target)<=0 ){
+			if (compVal<=0 ){
 				low=med;
 			}
 			//if (comp.compare(list.get(med),target)==0 ){
