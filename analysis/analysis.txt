@@ -1,11 +1,50 @@
-Put your name and netid here
+Fritz Thelusca
+ft34
 
 (1) Run the program BenchmarkForAutocomplete and copy/paste the 
 results here this for #matches = 20
 
+The output for BenchmarkForAutocomplete for when #matches = 20 is shown below.
+
+search	size	#match	binary	brute
+	456976	20	0.2285	0.0138
+a	17576	20	0.0038	0.0225
+b	17576	20	0.0037	0.0075
+c	17576	20	0.0043	0.0067
+x	17576	20	0.0056	0.0052
+y	17576	20	0.0040	0.0045
+z	17576	20	0.0039	0.0046
+aa	676	20	0.0001	0.0042
+az	676	20	0.0001	0.0043
+za	676	20	0.0002	0.0047
+zz	676	20	0.0001	0.0051
+
 (2) Run the program again for #matches = 10000, paste the results, 
 and then make any conclusions about how the # matches 
 effects the runtime. 
+
+The output for BenchmarkForAutocomplete for when #matches = 1000 is shown below.
+
+search	size	#match	binary	brute
+	456976	1000	0.2349	0.0217
+a	17576	1000	0.0045	0.0081
+b	17576	1000	0.0037	0.0075
+c	17576	1000	0.0046	0.0052
+x	17576	1000	0.0045	0.0046
+y	17576	1000	0.0046	0.0043
+z	17576	1000	0.0799	0.0050
+aa	676	1000	0.0001	0.0042
+az	676	1000	0.0002	0.0038
+za	676	1000	0.0002	0.0047
+zz	676	1000	0.0001	0.0055
+
+The number of matches can be represented as N.
+As the number of matches jumped from 20 to 1000, the runtime of both BruteAutoComplete and BinaryAutoComplete did see an increase;
+even thought it is minuscule.
+However, the runtime for BruteAutoComplete was consistently more affected by the increase in number of matches than BinaryAutoComplete. 
+This is because the runtime complexity for BruteAutoComplete is O(N),while the runtime complexity for BinaryAutoComplete is at most 1+O(log N) with bases 2. 
+So going from O(20) to O(1000) would lead to an larger increase than going from 1+O(log 20) to 1+O(log 1000).
+
 
 (3) Copy/paste the code from BruteAutocomplete.topMatches below. 
 Explain what the Big-Oh complexity of the entire loop: 
@@ -15,16 +54,82 @@ M, the number of terms that match the prefix.
 Assume that every priority-queue operation runs in O(log k) time. 
 Explain your answer which should be in terms of N, M, and k.
 
+The code from BruteAutocomplete.topMatches is pasted below.
+
+public List<Term> topMatches(String prefix, int k) {
+		if (k < 0) {
+			throw new IllegalArgumentException("Illegal value of k:"+k);
+		}
+		
+		// maintain pq of size k
+		PriorityQueue<Term> pq = new PriorityQueue<Term>(10, new Term.WeightOrder());
+		for (Term t : myTerms) {
+			if (!t.getWord().startsWith(prefix))
+				continue;
+			if (pq.size() < k) {
+				pq.add(t);
+			} else if (pq.peek().getWeight() < t.getWeight()) {
+				pq.remove();
+				pq.add(t);
+			}
+		}
+		int numResults = Math.min(k, pq.size());
+		LinkedList<Term> ret = new LinkedList<>();
+		for (int i = 0; i < numResults; i++) {
+			ret.addFirst(pq.remove());
+		}
+		return ret;
+	}
+}
+
+The runtime complexity for BruteAutoComplete.topMatches is O(N + M log k).
+It takes O(N) to iterate through every term in myTerm and add it to the Priority Queue if 
+term starts with the prefix. It takes O(M log k) to sort the terms and take the top k terms 
+using a priority queue.The priority-queue operation runs in O(log k) and it does this M times.
+Overall, the runtime complexity would be O(N + M log k).
+
 (4) Explain why the last for loop in BruteAutocomplete.topMatches 
 uses a LinkedList (and not an ArrayList) 
 AND why the PriorityQueue uses Term.WeightOrder to get 
 the top k heaviest matches -- rather than 
 using Term.ReverseWeightOrder.
 
+Adding to an end of a list and removal of a element is an O(1) operation for a LinkedList,
+while these operations are an O(N) operation for an ArrayList.
+The PriorityQueue uses Term.WeightOrder to get the top k heaviest matches rather than using 
+Term.ReverseWeightOrder because we want heaviest 
+the terms to pop of the priority queue first rather than the lightest terms when when add terms 
+to our linked list.
 
 (5) Explain what the runtime of the 
 BinarySearchAutocomplete.topMatches code that you 
 implemented is by copy/pasting the code below 
 and explaining your answer in terms of N, M, and k.
 
+The code from BinarySearchAutocomplete.topMatches is pasted below.
 
+	public List<Term> topMatches(String prefix, int k) {
+
+		ArrayList<Term> list = new ArrayList<>();
+		if (prefix ==null) {
+			throw new NullPointerException("prefix is null");}
+		Comparator<Term> c = new Term.PrefixOrder(prefix.length());
+		Term t = new Term(prefix,71);
+		int first = firstIndexOf(myTerms,t,c);
+		int last = lastIndexOf(myTerms,t,c);
+
+	
+		 if(first==-1) {return list;};
+		for(int i=first; i<last+1; i++ ) {
+			list.add(myTerms[i]);}
+		Collections.sort(list, Comparator.comparing(Term::getWeight).reversed());
+			if (list.size()>k) {
+	 list.subList(k, list.size()).clear();}
+		return list;
+	}
+}
+The runtime complexity for BinarySearchAutocomplete.topMatches code is O(log N + M log M).
+It takes (log N) to find the first and last index  using the first firstIndexOf and lastIndexOf, where N is number of elements in myTerms.
+It takes O(M log M) to copy terms to a list M times ,where M is the number of terms that match the prefix, 
+ sort them in reverse weight order, and then choose the first k of them. 
+ Overall the runtime would be, O(log N + M log M).
