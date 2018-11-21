@@ -98,8 +98,8 @@ Adding to an end of a list and removal of a element is an O(1) operation for a L
 while these operations are an O(N) operation for an ArrayList.
 The PriorityQueue uses Term.WeightOrder to get the top k heaviest matches rather than using 
 Term.ReverseWeightOrder because we want heaviest 
-the terms to pop of the priority queue first rather than the lightest terms when when add terms 
-to our linked list.
+the terms to pop off the priority queue first rather than the lightest terms when when add the terms 
+to the linked list.
 
 (5) Explain what the runtime of the 
 BinarySearchAutocomplete.topMatches code that you 
