@@ -121,7 +121,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		Collections.sort(list, Comparator.comparing(Term::getWeight).reversed());
 			if (list.size()>k) {
 	 list.subList(k, list.size()).clear();}
-			System.out.println(list);
+			//System.out.println(list);
 		return list;
 	}
 }

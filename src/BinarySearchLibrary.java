@@ -31,35 +31,20 @@ public class BinarySearchLibrary {
 	public static <T>
     	int firstIndex(List<T> list, 
 	               	T target, Comparator<T> comp) {
-		if (list.size()==0) {return -1;}
 		int low = -1;
 		int high = list.size()-1;
 		int med=0;
-		// (low,high] contains target
-		// TODO: complete method
 		
-		while (low+1 != high) {
-			//if(low+1==high&& (comp.compare(list.get(high),target)==0) ) {return high;}
-			//else if(low+1==high&& !(comp.compare(list.get(high),target)==0) ) {return -1;} 
-		med= ((low+high)/2);
+		if (list.size()==0) {return -1;}
 		
-		int compVal = comp.compare(list.get(med),target);
+		while (low+1 != high) {			
+			med= ((low+high)/2);
+			int compVal = comp.compare(list.get(med),target);
 		
-		if (compVal>=0 ){
-			high=med;	
-		}
-		if (compVal<0 ){
-			low=med;
-		}
-		//if (comp.compare(list.get(med),target)==0 ){
-			//high=med;
-			
-		//}
-		
+			if (compVal>=0 ){high=med;}
+			if (compVal<0 ){low=med;}
 		}
 		if (comp.compare(list.get(high),target)==0)  {return high;}
-		//return med;
-
 		return -1;
 	}
 
@@ -78,42 +63,20 @@ public class BinarySearchLibrary {
 	public static <T>
 	int lastIndex(List<T> list, 
                	  T target, Comparator<T> comp) {
-		if (list.size()==0) {return -1;}
-
 		int low = 0;
 		int high = list.size();
+		int med=0;
 		
-		// target in [low,high)
-		// TODO: complete method
-
-	int med=0;
-		
+		if (list.size()==0) {return -1;}
+	
 		while (low != high-1) {
-			//while (low <= high) {
 			med= ((low+high)/2);
-			//System.out.println(low);
-			//System.out.println(med);
-			//System.out.println(high);
-			//System.out.println(9999);
-			//if(low+1==high&& (comp.compare(list.get(low),target)==0) ) {return low;}
-			//else if(low+1==high&& !(comp.compare(list.get(low),target)==0) ) {return -1;} 
 			int compVal = comp.compare(list.get(med),target);
-			if  (compVal>0 ){
-				high=med;	
-			}
-			if (compVal<=0 ){
-				low=med;
-			}
-			//if (comp.compare(list.get(med),target)==0 ){
-				
-				//	low=med;
-					
-			//}
-				//return med;
 			
-			}
-		if (comp.compare(list.get(low),target)==0)  {return low;}
-				
+			if  (compVal>0 ){high=med;}
+			if (compVal<=0 ){low=med;}
+		}
+		if (comp.compare(list.get(low),target)==0)  {return low;}		
 		return -1;
 	}
 	
